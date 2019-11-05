@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    type: org.apache.commons.dbcp.BasicDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cmfz?characterEncoding=UTF-8
+    username: root
+    password: root
+  mvc:
+    view:
+      prefix: /
+      suffix: .jsp
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 100MB
+
+server:
+  port: 8989
+  servlet:
+    context-path: /star
+    jsp:
+      init-parameters:
+        development: true
+
+mybatis:
+  mapper-locations: classpath:com/baizhi/mapper/*.xml  #指定mapper配置文件位置
+  type-aliases-package: com.baizhi.entity              #指定起别名来的类
+
