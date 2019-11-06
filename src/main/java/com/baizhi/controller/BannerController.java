@@ -23,7 +23,7 @@ public class BannerController {
     @RequestMapping("findAll")
     @ResponseBody
     public Map<String,Object> findAll(Integer page,Integer rows){
-        List<Banner> banners = bannerService.findAll(page, rows);
+        List<Banner> banners = bannerService.selectAll(page, rows);
         int totalCounts = bannerService.findTotalCounts();
         HashMap<String, Object> result = new HashMap<>();
         result.put("rows",banners);//当前页集合

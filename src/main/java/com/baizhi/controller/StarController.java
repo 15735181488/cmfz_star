@@ -74,7 +74,7 @@ public class StarController {
     }
     @RequestMapping("findAll")
     public void findAll(HttpServletResponse response) throws IOException {
-        List<Star> stars = starService.findAll();
+        List<Star> stars = starService.selectAll();
         StringBuilder sb = new StringBuilder();
         sb.append("<select>");
         stars.forEach(star -> {

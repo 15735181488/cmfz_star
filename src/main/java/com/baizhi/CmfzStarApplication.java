@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
+import redis.clients.jedis.Jedis;
 import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
@@ -31,4 +32,11 @@ public class CmfzStarApplication {
         HttpMessageConverter<?> converter = fasHttpMessageConverter;
         return new HttpMessageConverters(converter);
     }
+
+    @Bean
+    public Jedis getJedis() {
+        return new Jedis("192.168.72.138", 6379);
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.baizhi.service.impl;
 
+import com.baizhi.annotation.RedisCache;
 import com.baizhi.dao.StarDao;
 import com.baizhi.dao.UserDao;
 import com.baizhi.dao.UserEchartsDao;
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @RedisCache
     public Map<String, Object> selectAll(Integer page, Integer rows) {
         Map<String,Object> map=new HashMap<>();
         User user=new User();
@@ -64,6 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @RedisCache
     public List<User> selectAll() {
         return userDao.selectAll();
     }

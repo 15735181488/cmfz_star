@@ -1,5 +1,6 @@
 package com.baizhi.service.impl;
 
+import com.baizhi.annotation.ClearRedisCache;
 import com.baizhi.dao.AlbumDao;
 import com.baizhi.dao.SongDao;
 import com.baizhi.entity.Album;
@@ -43,6 +44,7 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
+    @ClearRedisCache
     public String add(Song song) {
         song.setId(UUID.randomUUID().toString());
         song.setCreateDate(new Date());
@@ -56,6 +58,7 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
+    @ClearRedisCache
     public void update(Song song) {
         int i = songDao.updateByPrimaryKeySelective(song);
         if(i==0){

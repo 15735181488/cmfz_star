@@ -1,5 +1,7 @@
 package com.baizhi.service.impl;
 
+import com.baizhi.annotation.ClearRedisCache;
+import com.baizhi.annotation.RedisCache;
 import com.baizhi.dao.BannerDao;
 import com.baizhi.entity.Banner;
 import com.baizhi.service.BannerService;
@@ -22,7 +24,8 @@ public class BannerServiceImpl implements BannerService {
     private BannerDao bannerDao;
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<Banner> findAll(Integer page,Integer rows) {
+    @RedisCache
+    public List<Banner> selectAll(Integer page, Integer rows) {
         Banner banner = new Banner();
         int start=(page-1)*rows;
         RowBounds rowBounds = new RowBounds(start,rows);
@@ -38,6 +41,7 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
+    @ClearRedisCache
     public String add(Banner banner) {
         banner.setId(UUID.randomUUID().toString());
         banner.setCreateDate(new Date());
@@ -51,6 +55,7 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
+    @ClearRedisCache
     public void update(Banner banner) {
         if("".equals(banner.getCover())){
             banner.setCover(null);
@@ -64,6 +69,7 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
+    @ClearRedisCache
     public void delete(String id, HttpServletRequest request) {
         Banner banner = bannerDao.selectByPrimaryKey(id);
         int i = bannerDao.deleteByPrimaryKey(id);

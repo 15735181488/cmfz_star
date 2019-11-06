@@ -1,5 +1,6 @@
 package com.baizhi.service.impl;
 
+import com.baizhi.annotation.RedisCache;
 import com.baizhi.dao.ArticleDao;
 import com.baizhi.dao.StarDao;
 import com.baizhi.entity.Article;
@@ -22,6 +23,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
+    @RedisCache
     public Map<String, Object> selectAll(Integer page, Integer rows) {
         Map<String,Object> map=new HashMap<>();
         Article article=new Article();

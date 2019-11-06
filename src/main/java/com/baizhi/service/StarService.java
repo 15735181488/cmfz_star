@@ -11,6 +11,7 @@ public interface StarService {
     String add(Star star);
     void update(Star star);
     void delete(String id, HttpServletRequest request);
-    List<Star> findAll();
+
+    List<Star> selectAll();
 
 }

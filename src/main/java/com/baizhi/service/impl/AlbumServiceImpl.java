@@ -1,5 +1,7 @@
 package com.baizhi.service.impl;
 
+import com.baizhi.annotation.ClearRedisCache;
+import com.baizhi.annotation.RedisCache;
 import com.baizhi.dao.AlbumDao;
 import com.baizhi.dao.StarDao;
 import com.baizhi.entity.Album;
@@ -13,7 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Service("albumService")
 @Transactional
@@ -25,6 +30,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
+    @RedisCache
     public Map<String, Object> selectAll(Integer page, Integer rows) {
         Map<String,Object> map=new HashMap<>();
         Album album=new Album();
@@ -44,6 +50,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @ClearRedisCache
     public String add(Album album) {
         album.setId(UUID.randomUUID().toString());
         album.setCount(0);
@@ -57,6 +64,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @ClearRedisCache
     public void update(Album album) {
         if("".equals(album.getCover())){
             album.setCover(null);
@@ -70,6 +78,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @ClearRedisCache
     public void delete(String id, HttpServletRequest request) {
         Album album = albumDao.selectByPrimaryKey(id);
         int i = albumDao.deleteByPrimaryKey(id);

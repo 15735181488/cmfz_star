@@ -1,5 +1,7 @@
 package com.baizhi.service.impl;
 
+import com.baizhi.annotation.ClearRedisCache;
+import com.baizhi.annotation.RedisCache;
 import com.baizhi.dao.StarDao;
 import com.baizhi.entity.Star;
 import com.baizhi.service.StarService;
@@ -23,6 +25,7 @@ public class StarServiceImpl implements StarService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
+    @RedisCache
     public List<Star> selectAll(Integer page, Integer rows) {
         Star star=new Star();
         RowBounds rowBounds=new RowBounds((page-1)*rows,rows);
@@ -38,6 +41,7 @@ public class StarServiceImpl implements StarService {
     }
 
     @Override
+    @ClearRedisCache
     public String add(Star star) {
         star.setId(UUID.randomUUID().toString());
         String substring = star.getPhoto().substring(star.getPhoto().lastIndexOf("\\") + 1);
@@ -50,6 +54,7 @@ public class StarServiceImpl implements StarService {
     }
 
     @Override
+    @ClearRedisCache
     public void update(Star star) {
         if("".equals(star.getPhoto())){
             star.setPhoto(null);
@@ -63,6 +68,7 @@ public class StarServiceImpl implements StarService {
     }
 
     @Override
+    @ClearRedisCache
     public void delete(String id, HttpServletRequest request) {
         Star star=starDao.selectByPrimaryKey(id);
         int i = starDao.deleteByPrimaryKey(id);
@@ -80,7 +86,8 @@ public class StarServiceImpl implements StarService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<Star> findAll() {
+    @RedisCache
+    public List<Star> selectAll() {
         return starDao.selectAll();
     }
 }

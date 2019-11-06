@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface BannerService {
 
-    List<Banner> findAll(Integer page,Integer rows);
+    List<Banner> selectAll(Integer page, Integer rows);
     int findTotalCounts();
     String add(Banner banner);
     void update(Banner banner);
