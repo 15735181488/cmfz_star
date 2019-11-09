@@ -9,12 +9,18 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.baizhi.entity.Admin;
 import com.baizhi.service.AdminService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,24 +30,77 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+
     @RequestMapping("login")
     @ResponseBody
     public Map<String,Object> login(Admin admin, String inputCode, HttpServletRequest request){
         Map<String,Object> map=new HashMap<>();
+        HttpSession session = request.getSession();
+        String securityCode = (String) session.getAttribute("securityCode");
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(admin.getUsername(), admin.getPassword());
         try {
-            adminService.login(admin, inputCode, request);
-            map.put("status",true);
-        } catch (Exception e) {
+            //adminService.login(admin, inputCode, request);
+            if (securityCode.equalsIgnoreCase(inputCode)) {
+                subject.login(token);
+                map.put("status", true);
+            } else {
+                map.put("status", false);
+                map.put("message", "验证码错误");
+            }
+
+        } catch (UnknownAccountException e) {
+            e.printStackTrace();
             map.put("status",false);
-            map.put("message",e.getMessage());
+            map.put("message", "用户名错误");
+        } catch (IncorrectCredentialsException e) {
+            e.printStackTrace();
+            map.put("status", false);
+            map.put("message", "密码错误");
         }
         return map;
     }
     @RequestMapping("exit")
-    public String exit(HttpServletRequest request){
-        request.getSession().removeAttribute("loginAdmin");
-        return "redirect:/login/login.jsp";
+    public String logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "redirect:/login.jsp";
     }
+
+
+   /* @RequestMapping("login")
+    public String login(Admin admin,String inputCode, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String securityCode = (String) session.getAttribute("securityCode");
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(admin.getUsername(),admin.getPassword());
+        try {
+            if(securityCode.equalsIgnoreCase(inputCode)){
+                subject.login(token);
+                return "redirect:/main.jsp";
+            }else{
+                throw new RuntimeException("验证码错误!!!");
+            }
+
+        } catch (UnknownAccountException e) {
+            System.out.println("username is error");
+            e.printStackTrace();
+            return "redirect:/login/login.jsp";
+        } catch (IncorrectCredentialsException e){
+            System.out.println("password is error");
+            e.printStackTrace();
+            return "redirect:/login/login.jsp";
+        }
+    }
+
+    @RequestMapping("exit")
+    public String logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "redirect:/login.jsp";
+    }*/
+
+
 
     @RequestMapping("sendMessage")
     /**

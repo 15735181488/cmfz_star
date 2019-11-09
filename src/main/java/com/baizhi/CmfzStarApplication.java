@@ -33,7 +33,7 @@ public class CmfzStarApplication {
         return new HttpMessageConverters(converter);
     }
 
-    @Bean
+    @Bean("jedis")
     public Jedis getJedis() {
         return new Jedis("192.168.72.138", 6379);
     }

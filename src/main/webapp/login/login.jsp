@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,8 +14,8 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <%--<script src="assets/js/jquery-2.2.1.min.js"></script>--%>
-    <script src="../bootstrapgrid/jquery-3.4.1.min.js"></script>
+    <script src="assets/js/jquery-2.2.1.min.js"></script>
+    <%--<script src="../bootstrapgrid/jquery-3.4.1.min.js"></script>--%>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/jquery.backstretch.min.js"></script>
     <script src="assets/js/scripts.js"></script>
@@ -64,30 +64,30 @@
 
         $(function () {
             $("#sendMessage").click(function () {
-            var phone = $("#admin-phone").val();
-            $.ajax({
-                url: "${pageContext.request.contextPath}/admin/sendMessage",
-                type: "post",
-                data:{phone:phone},
-                dataType: "json"
+                var phone = $("#admin-phone").val();
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/admin/sendMessage",
+                    type: "post",
+                    data: {phone: phone},
+                    dataType: "json"
+                })
             })
-        })
         })
 
         $(function () {
             $("#save").click(function () {
-            $.ajax({
-                url:"${pageContext.request.contextPath}/admin/save",
-                type:"post",
-                data:$("#admin-form").serialize(),
-                datatype:"json",
-                success: function (data) {
-                    if(data.status){
-                        location.href = "${pageContext.request.contextPath}/login/login.jsp"
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/admin/save",
+                    type: "post",
+                    data: $("#admin-form").serialize(),
+                    datatype: "json",
+                    success: function (data) {
+                        if (data.status) {
+                            location.href = "${pageContext.request.contextPath}/login/login.jsp"
+                        }
                     }
-                }
+                })
             })
-        })
         })
     </script>
 </head>

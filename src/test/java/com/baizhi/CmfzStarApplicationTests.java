@@ -25,7 +25,7 @@ class CmfzStarApplicationTests {
     public void testList2() {
         BoundListOperations ops = redisTemplate.boundListOps("aa");
         ops.leftPush("123");
-        ops.leftPush(new Admin("2", "huahua", "222", "huu", "12345"));
+        //ops.leftPush(new Admin("2", "huahua", "222", "huu", "12345"));
 
         List list = ops.range(0, -1);
         for (Object o : list) {
@@ -38,7 +38,7 @@ class CmfzStarApplicationTests {
     public void testList() {
         ListOperations listOperations = redisTemplate.opsForList();
         listOperations.leftPush("aa", "123");
-        listOperations.leftPush("aa", new Admin("1", "huahua", "111", "huu", "12345"));
+        //listOperations.leftPush("aa", new Admin("1", "huahua", "111", "huu", "12345"));
 
         List list = listOperations.range("aa", 0, -1);
         for (Object o : list) {
@@ -52,7 +52,7 @@ class CmfzStarApplicationTests {
         ValueOperations valueOperations = redisTemplate.opsForValue();
 
         valueOperations.set("name", "zhangsan");
-        valueOperations.set("admin", new Admin("1", "huahua", "111", "huu", "12345"));
+        //valueOperations.set("admin", new Admin("1", "huahua", "111", "huu", "12345"));
 
         Object name = valueOperations.get("name");
         System.out.println(name);
