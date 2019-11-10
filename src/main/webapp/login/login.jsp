@@ -1,6 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>Bootstrap Login Form Template</title>
     <!-- CSS -->
@@ -196,7 +195,7 @@
                         <label for="admin-inputCode" class="col-sm-2 control-label">验证码</label>
                         <div class="col-sm-10">
                             <input type="text" name="inputCode" style="width: 400px" id="admin-inputCode">
-                            <input type="submit" style="width: 100px" id="sendMessage" value="发送验证码"/>
+                            <input type="button" style="width: 100px" id="sendMessage" value="发送验证码"/>
                         </div>
                     </div>
 

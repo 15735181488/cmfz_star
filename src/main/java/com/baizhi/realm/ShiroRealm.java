@@ -45,6 +45,9 @@ public class ShiroRealm extends AuthorizingRealm {
         if ("lisi".equals(username)) {
             info.addStringPermission("user:*");
         }
+        if ("zzj".equals(username)) {
+            info.addStringPermission("user:*");
+        }
         return info;
     }
 

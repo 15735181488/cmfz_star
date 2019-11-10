@@ -24,9 +24,16 @@ public class ShiroFilter {
         Map<String, String> map = new HashMap<>();
 //        AnonymousFilter           匿名拦截器   anon
 //        FormAuthenticationFilter  认证拦截器   authc
+        map.put("/statics/**", "anon");
+        map.put("/login/css/**", "anon");
+        map.put("/login/assets/**", "anon");
+        map.put("/bootstrapgrid/**", "anon");
+
         map.put("/admin/login", "anon");
         map.put("/code/getCode", "anon");
         map.put("/main.jsp", "anon");
+        map.put("/admin/sendMessage", "anon");
+        map.put("/admin/save", "anon");
 
         map.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);

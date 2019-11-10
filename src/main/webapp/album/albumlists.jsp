@@ -1,6 +1,6 @@
+<%@page contentType="text/html; UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set value="${pageContext.request.contextPath}" var="app"></c:set>
-<%@page contentType="text/html; UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <!--页头-->
 <div class="page-header" style="margin-top: -20px;">
     <h1>专辑管理</h1>
@@ -34,8 +34,8 @@
                 {name:"starId",editable:true,edittype:"select",editoptions:{
                         dataUrl:"${app}/star/findAll"//获取所有部门列表  html 必须select option ....</select>
                         //value:"男:男;女:女"  //书写本地数据
-                    },formatter:function(value,options,row){
-                        return row.star.realname;
+                    },formatter:function(value, options, row){
+                        return row.star.nickname;
                     }
                 },
             ],
@@ -132,6 +132,7 @@
 
         );
     })
+
     function showPicture(cellvalue){
         return "<img src='${pageContext.request.contextPath}/user/img/" +cellvalue + "' height='100' width='130'/>";
     }

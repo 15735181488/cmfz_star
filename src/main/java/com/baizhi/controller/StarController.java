@@ -78,7 +78,7 @@ public class StarController {
         StringBuilder sb = new StringBuilder();
         sb.append("<select>");
         stars.forEach(star -> {
-            sb.append("<option value=").append(star.getId()).append(">").append(star.getRealname()).append("</option>");
+            sb.append("<option value=").append(star.getId()).append(">").append(star.getNickname()).append("</option>");
         });
         sb.append("</select>");
         //获取响应流

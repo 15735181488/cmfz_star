@@ -1,8 +1,12 @@
 package com.baizhi.service.impl;
 
 import com.baizhi.dao.AdminDao;
+import com.baizhi.dao.AdminRoleDao;
 import com.baizhi.entity.Admin;
+import com.baizhi.entity.AdminRole;
 import com.baizhi.service.AdminService;
+import com.baizhi.util.MD5Utils;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +21,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private AdminDao adminDao;
+    @Autowired
+    private AdminRoleDao adminRoleDao;
+
     @Override
     public void login(Admin admin, String inputCode, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -36,7 +43,22 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void save(Admin admin) {
-        admin.setId(UUID.randomUUID().toString());
+        String id = UUID.randomUUID().toString();
+        admin.setId(id);
+        //生成盐
+        String salt = MD5Utils.getSalt();
+        admin.setSalt(salt);
+        //将输入的密码+随机盐进行加密
+        String password = admin.getPassword();
+        Md5Hash hash = new Md5Hash(password, salt, 1024);
+        String secretPassword = hash.toHex();
+        //将密文入库
+        admin.setPassword(secretPassword);
+        AdminRole adminRole = new AdminRole();
+        adminRole.setId(UUID.randomUUID().toString());
+        adminRole.setAdminId(id);
+        adminRole.setRoleId("r1");
+        adminRoleDao.insertSelective(adminRole);
         adminDao.insertSelective(admin);
     }
 }
