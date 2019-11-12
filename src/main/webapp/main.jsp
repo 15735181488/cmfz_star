@@ -128,8 +128,10 @@
             <div id="articalLists" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
                     <ul class="list-group">
-                        <li class="list-group-item"><a
-                                href="javascript:$('#centerLayout').load('${app}/article/articlelists.jsp')">文章列表</a>
+                        <li class="list-group-item">
+                            <a href="javascript:$('#centerLayout').load('${app}/article/articlelists.jsp')">文章列表</a>
+                            <br><br>
+                            <a href="javascript:$('#centerLayout').load('${app}/article/article-search.jsp')">文章搜索</a>
                         </li>
                     </ul>
                 </div>

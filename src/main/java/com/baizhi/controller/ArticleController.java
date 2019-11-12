@@ -107,4 +107,12 @@ public class ArticleController {
         return map;
     }
 
+    @RequestMapping("search")
+    public List<Article> search(String input) {
+        List<Article> articles = articleService.search(input);
+        return articles;
+    }
+
+
+
 }
